@@ -6,6 +6,7 @@ import '../../utils/colors/app_colors.dart';
 import '../../utils/images/app_images.dart';
 import '../on_boarding/onboarding_screen.dart';
 import '../auth/auth_screen.dart';
+import '../tab_box/tab_box_admin.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -35,9 +36,16 @@ class _SplashScreenState extends State<SplashScreen> {
       );
       prefs.setBool('firstLaunch', false);
     } else {
-      bool isUserAuthenticated = await checkUserAuthentication();
+      final userName = prefs.getString('userName');
+      final userPhone = prefs.getString('userPhone');
 
-      if (isUserAuthenticated) {
+      if (userName == "admin" && userPhone == "+(998) 77 777-77-77") {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => TabBoxAdmin(),
+          ),
+        );
+      } else if (userName != null && userPhone != null) {
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
             builder: (context) => TabBoxUser(),
@@ -53,12 +61,21 @@ class _SplashScreenState extends State<SplashScreen> {
     }
   }
 
-  Future<bool> checkUserAuthentication() async {
+  Future<String?> checkUserAuthentication() async {
     final prefs = await SharedPreferences.getInstance();
-    final userToken = prefs.getString('userToken');
+    final userName = prefs.getString('userName');
+    final userPhone = prefs.getString('userPhone');
 
-    return userToken != null;
+    if ((userName == "admin" && userPhone == "+(998) 77 777-77-77") ||
+        (userName != null && userPhone != null)) {
+      // User or admin is already registered
+      return "registered";
+    } else {
+      // User is not registered
+      return "unregistered";
+    }
   }
+
 
   @override
   Widget build(BuildContext context) {

@@ -77,8 +77,13 @@ class _AuthScreenState extends State<AuthScreen> {
                         if (value == null || value.isEmpty) {
                           return 'This is very important for us to contact you!';
                         }
+                        final phonePattern = RegExp(r'^\+\(\d{3}\) \d{2} \d{3}-\d{2}-\d{2}$');
+                        if (!phonePattern.hasMatch(value)) {
+                          return 'Please enter a valid phone number in the format +(XXX) XX XXX-XX-XX';
+                        }
                         return null;
                       },
+
                     ),
                   ],
                 ),

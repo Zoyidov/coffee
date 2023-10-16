@@ -35,6 +35,8 @@ class _HomeUserState extends State<HomeUser> {
     _databaseInitialization = _initializeDatabase();
   }
 
+
+
   Future<void> _initializeDatabase() async {
     await _database.initializeDatabase();
   }

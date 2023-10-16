@@ -147,17 +147,11 @@ class _HomeAdminState extends State<HomeAdmin> {
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(12.0),
                             child: Image.file(
-                              File(coffee['imageUrl']??'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3r1s8qt1jMFd_y-bzV8skZdYb6PYQgUKIAq7BXzuv6peeWIHsjPzK7seb7mrXgePv0a4&usqp=CAU'),
+                              File(coffee['imageUrl']),
                               fit: BoxFit.fill,
                               errorBuilder:
                                   (context, error, stackTrace) {
-                                return const Center(
-                                  child: Icon(
-                                    Icons.error,
-                                    color: Colors.red,
-                                    size: 48.0,
-                                  ),
-                                );
+                                return Image.network('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3r1s8qt1jMFd_y-bzV8skZdYb6PYQgUKIAq7BXzuv6peeWIHsjPzK7seb7mrXgePv0a4&usqp=CAU');
                               },
                             ),
                           ),
