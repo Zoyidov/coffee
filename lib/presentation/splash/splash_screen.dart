@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:coffee/presentation/tab_box/tab_box_user.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
@@ -26,12 +28,13 @@ class _SplashScreenState extends State<SplashScreen> {
     final prefs = await SharedPreferences.getInstance();
     final isFirstLaunch = prefs.getBool('firstLaunch') ?? true;
 
-    await Future.delayed(Duration(seconds: 3));
+    await Future.delayed(const Duration(seconds: 3));
 
     if (isFirstLaunch) {
+      // ignore: use_build_context_synchronously
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
-          builder: (context) => OnBoardingScreen(),
+          builder: (context) => const OnBoardingScreen(),
         ),
       );
       prefs.setBool('firstLaunch', false);
@@ -40,21 +43,24 @@ class _SplashScreenState extends State<SplashScreen> {
       final userPhone = prefs.getString('userPhone');
 
       if (userName == "admin" && userPhone == "+(998) 77 777-77-77") {
+        // ignore: use_build_context_synchronously
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
             builder: (context) => TabBoxAdmin(),
           ),
         );
       } else if (userName != null && userPhone != null) {
+        // ignore: use_build_context_synchronously
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
             builder: (context) => TabBoxUser(),
           ),
         );
       } else {
+        // ignore: use_build_context_synchronously
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
-            builder: (context) => AuthScreen(),
+            builder: (context) => const AuthScreen(),
           ),
         );
       }

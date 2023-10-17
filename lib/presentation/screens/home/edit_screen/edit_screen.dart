@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../data/model/coffee_model.dart';
+import '../../../../utils/colors/app_colors.dart';
 
 class CoffeeEditScreen extends StatefulWidget {
   final Map<String, dynamic> coffee;
@@ -54,7 +55,8 @@ class _CoffeeEditScreenState extends State<CoffeeEditScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Edit Coffee'),
+        backgroundColor: AppColors.c_201,
+        title: const Text('Edit Coffee Detail'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -89,6 +91,9 @@ class _CoffeeEditScreenState extends State<CoffeeEditScreen> {
                 ));
                 Navigator.of(context).pop();
               },
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(AppColors.c_201),
+              ),
               child: const Text('Save Changes'),
             ),
           ],

@@ -38,8 +38,8 @@ class _HomeAdminState extends State<HomeAdmin> {
         data['id'] = doc.id;
         return data;
       }).toList();
+    // ignore: empty_catches
     } catch (e) {
-      print("Error fetching coffee data: $e");
     }
 
     setState(() {
@@ -57,6 +57,7 @@ class _HomeAdminState extends State<HomeAdmin> {
 
       setState(() {});
 
+    // ignore: empty_catches
     } catch (e) {
     }
   }
@@ -109,7 +110,7 @@ class _HomeAdminState extends State<HomeAdmin> {
       backgroundColor: AppColors.c_201,
       appBar: appBar,
       body: isLoading
-          ? Center(
+          ? const Center(
         child: CircularProgressIndicator()
       )
           : filteredCoffeeData.isNotEmpty

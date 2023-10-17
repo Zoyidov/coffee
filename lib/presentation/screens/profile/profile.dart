@@ -7,7 +7,10 @@ import '../../../widgets/global_button.dart';
 import '../../../widgets/log_out_dialog.dart';
 
 class Profile extends StatefulWidget {
+  const Profile({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _ProfileState createState() => _ProfileState();
 }
 
@@ -72,7 +75,7 @@ class _ProfileState extends State<Profile> {
           const SizedBox(height: 20),
           Text(
             userName ?? 'John Doe',
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 24,
               color: Colors.black,
             ),
@@ -80,7 +83,7 @@ class _ProfileState extends State<Profile> {
           const SizedBox(height: 10),
           Text(
             phoneNumber ?? '+1 (123) 456-7890',
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 16,
               color: Colors.black,
             ),

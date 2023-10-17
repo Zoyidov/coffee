@@ -1,9 +1,7 @@
 import 'dart:io';
 
-import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:coffee/utils/colors/app_colors.dart';
 import 'package:coffee/widgets/global_button.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 

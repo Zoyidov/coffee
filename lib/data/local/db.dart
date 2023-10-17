@@ -1,5 +1,7 @@
+// ignore: depend_on_referenced_packages
 import 'package:sqflite/sqflite.dart';
-import 'package:path/path.dart';
+// ignore: depend_on_referenced_packages
+import'package:path/path.dart';
 
 import '../model/coffee_model.dart';
 
@@ -33,7 +35,6 @@ class CoffeeDatabase {
   }
 
   Future<int> insertCoffee(Coffee coffee) async {
-    print('qoshildi');
     if (!_initialized) {
       throw Exception("Database not initialized. Call initializeDatabase() first.");
     }

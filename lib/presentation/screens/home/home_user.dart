@@ -9,7 +9,6 @@ import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 
 import '../../../data/local/db.dart';
 import '../../../data/model/coffee_model.dart';
-import 'edit_screen/edit_screen.dart';
 
 class HomeUser extends StatefulWidget {
   const HomeUser({super.key});
@@ -118,7 +117,7 @@ class _HomeUserState extends State<HomeUser> {
       backgroundColor: AppColors.c_201,
       appBar: appBar,
       body: isLoading
-          ? Center(child: CircularProgressIndicator())
+          ? const Center(child: CircularProgressIndicator())
           : filteredCoffeeData.isNotEmpty
               ? Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),

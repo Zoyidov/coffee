@@ -11,6 +11,7 @@ class Cart extends StatefulWidget {
   const Cart({Key? key}) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _CartState createState() => _CartState();
 }
 
@@ -238,11 +239,11 @@ class _CartState extends State<Cart> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Order Not Possible'),
-          content: Text('Sorry, it is not possible to order at the moment.'),
+          title: const Text('Order Not Possible'),
+          content: const Text('Sorry, it is not possible to order at the moment.'),
           actions: <Widget>[
             TextButton(
-              child: Text('OK'),
+              child: const Text('OK'),
               onPressed: () {
                 Navigator.of(context).pop();
               },

@@ -16,7 +16,7 @@ class TabBoxAdmin extends StatelessWidget {
   List<Widget> pages = [
     const HomeAdmin(),
     const Add(),
-     Profile(),
+     const Profile(),
   ];
 
   @override

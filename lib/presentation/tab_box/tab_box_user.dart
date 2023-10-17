@@ -15,8 +15,8 @@ class TabBoxUser extends StatelessWidget {
 
   List<Widget> pages = [
     const HomeUser(),
-     Cart(),
-     Profile(),
+     const Cart(),
+     const Profile(),
   ];
 
   @override
@@ -45,6 +45,7 @@ class TabBoxUser extends StatelessWidget {
             ),
             activeIcon: SvgPicture.asset(
               AppImages.home,
+              // ignore: deprecated_member_use
               color: AppColors.c_FDA429,
             ),
             label: '•',
@@ -53,6 +54,7 @@ class TabBoxUser extends StatelessWidget {
             icon: SvgPicture.asset(AppImages.cart),
             activeIcon: SvgPicture.asset(
               AppImages.cart,
+              // ignore: deprecated_member_use
               color: AppColors.c_FDA429,
             ),
             label: '•',
