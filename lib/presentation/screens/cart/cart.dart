@@ -8,7 +8,7 @@ import '../../../utils/images/app_images.dart';
 import '../../../widgets/global_button.dart';
 
 class Cart extends StatefulWidget {
-  const Cart({super.key});
+  const Cart({Key? key}) : super(key: key);
 
   @override
   _CartState createState() => _CartState();
@@ -38,12 +38,11 @@ class _CartState extends State<Cart> {
     double sum = 0.0;
     for (final item in coffeeList) {
       final price = double.tryParse(item.price) ?? 0.0;
-      final quantity = int.tryParse(item.quantity as String) ?? 0;
+      final quantity = item.quantity;
       sum += (price * quantity);
     }
     return sum;
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +56,11 @@ class _CartState extends State<Cart> {
         backgroundColor: AppColors.c_201,
         title: Text(
           'Cart',
-          style: TextStyle(color: AppColors.white, fontSize: 30, fontWeight: FontWeight.w600),
+          style: TextStyle(
+            color: AppColors.white,
+            fontSize: 30,
+            fontWeight: FontWeight.w600,
+          ),
         ),
       ),
       body: Padding(
@@ -90,12 +93,14 @@ class _CartState extends State<Cart> {
                         ),
                       ),
                     ),
-                    onDismissed: (direction) {
-                      setState(() async {
-                        await CoffeeDatabase.instance.deleteAllCoffees();
-                        coffeeList.removeAt(index);
-                        total = _calculateTotal();
-                      });
+                    onDismissed: (direction) async {
+                      if (item.id != null) {
+                        await CoffeeDatabase.instance.deleteCoffee(item.id!);
+                        setState(() {
+                          coffeeList.remove(item);
+                          total = _calculateTotal();
+                        });
+                      }
                     },
                     child: Container(
                       margin: const EdgeInsets.symmetric(vertical: 5.0),
@@ -129,7 +134,7 @@ class _CartState extends State<Cart> {
                                   ),
                                   onPressed: () {
                                     setState(() {
-                                      if (item.quantity > 0) {
+                                      if (item.quantity > 1) {
                                         item.quantity -= 1;
                                         total = _calculateTotal();
                                       }
@@ -215,7 +220,7 @@ class _CartState extends State<Cart> {
                   buttonText: 'Book Now',
                   iconData: Icons.coffee_rounded,
                   onPressed: () {
-                    // Handle the book now button click
+                    _showOrderNotPossibleDialog(context); // Show the dialog
                   },
                   buttonColor: AppColors.white,
                   textColor: AppColors.black,
@@ -226,6 +231,25 @@ class _CartState extends State<Cart> {
           ],
         ),
       ),
+    );
+  }
+  void _showOrderNotPossibleDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Order Not Possible'),
+          content: Text('Sorry, it is not possible to order at the moment.'),
+          actions: <Widget>[
+            TextButton(
+              child: Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }

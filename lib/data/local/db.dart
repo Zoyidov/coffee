@@ -4,51 +4,65 @@ import 'package:path/path.dart';
 import '../model/coffee_model.dart';
 
 class CoffeeDatabase {
-  late final Database _database;
+  late Database _database;
+  bool _initialized = false;
 
-  CoffeeDatabase._privateConstructor();
-  static final CoffeeDatabase instance = CoffeeDatabase._privateConstructor();
+  static final CoffeeDatabase _instance = CoffeeDatabase._internal();
+
+  CoffeeDatabase._internal();
+
+  static CoffeeDatabase get instance => _instance;
 
   Future<void> initializeDatabase() async {
-    if (_database != null) {
-      return;
+    if (!_initialized) {
+      final String path = join(await getDatabasesPath(), 'coffee_database.db');
+      _database = await openDatabase(path, version: 1, onCreate: (db, version) {
+        db.execute('''
+          CREATE TABLE coffees(
+            id INTEGER PRIMARY KEY,
+            name TEXT,
+            type TEXT,
+            price TEXT,
+            imageUrl TEXT,
+            description TEXT
+          )
+        ''');
+      });
+      _initialized = true;
     }
-    String path = join(await getDatabasesPath(), 'coffee_database.db');
-    _database = await openDatabase(
-      path,
-      version: 1,
-      onCreate: _createDb,
-    );
-  }
-
-  void _createDb(Database db, int version) async {
-    await db.execute('''
-      CREATE TABLE coffee(
-        id INTEGER PRIMARY KEY,
-        name TEXT,
-        type TEXT,
-        price TEXT,
-        imageUrl TEXT,
-        description TEXT
-      )
-    ''');
   }
 
   Future<int> insertCoffee(Coffee coffee) async {
-    await initializeDatabase();
-    return await _database.insert('coffee', coffee.toMap());
+    print('qoshildi');
+    if (!_initialized) {
+      throw Exception("Database not initialized. Call initializeDatabase() first.");
+    }
+    final int id = await _database.insert('coffees', coffee.toMap());
+    return id;
   }
 
-  Future<int> deleteAllCoffees() async {
-    await initializeDatabase();
-    return await _database.delete('coffee');
-  }
 
   Future<List<Coffee>> getAllCoffees() async {
-    await initializeDatabase();
-    final List<Map<String, dynamic>> maps = await _database.query('coffee');
+    final List<Map<String, dynamic>> maps = await _database.query('coffees');
     return List.generate(maps.length, (i) {
-      return Coffee.fromMap(maps[i]);
+      return Coffee(
+        id: maps[i]['id'],
+        name: maps[i]['name'],
+        type: maps[i]['type'],
+        price: maps[i]['price'],
+        imageUrl: maps[i]['imageUrl'],
+        description: maps[i]['description'],
+      );
     });
   }
+
+  Future<void> deleteCoffee(int id) async {
+    await _database.delete(
+      'coffees',
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+  }
+
+
 }

@@ -159,12 +159,10 @@ class _AddState extends State<Add> {
                       descriptionController.clear();
                       priceController.clear();
 
-                      GlobalAwesomeDialog.showCustomDialog(
+                      CustomDialog.showCustomDialog(
                         context,
                         'Success',
                         'This is a success message.',
-                        // ignore: deprecated_member_use
-                        DialogType.SUCCES,
                       );
                     } else {
                       GlobalSnackbar.showSnackbar(

@@ -1,25 +1,50 @@
-import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 
-class GlobalAwesomeDialog {
+class CustomDialog {
   static void showCustomDialog(
       BuildContext context,
       String title,
       String desc,
-      DialogType dialogType,
       ) {
-    AwesomeDialog(
+    showDialog(
       context: context,
-      dialogType: dialogType,
-      animType: AnimType.SCALE,
-      title: title,
-      desc: desc,
-      btnCancelOnPress: () {
-        Navigator.of(context).pop();
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          child: Container(
+            padding: EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Text(
+                  title,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
+                ),
+                SizedBox(height: 10),
+                Text(desc),
+                SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Text('OK'),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        );
       },
-      btnOkOnPress: () {
-        Navigator.of(context).pop();
-      },
-    ).show();
+    );
   }
 }

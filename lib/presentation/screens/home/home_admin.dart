@@ -32,25 +32,31 @@ class _HomeAdminState extends State<HomeAdmin> {
 
   Future<void> fetchCoffeeData() async {
     try {
-      final QuerySnapshot querySnapshot =
-      await firestore.collection('coffees').get();
-
+      final QuerySnapshot querySnapshot = await firestore.collection('coffees').get();
       filteredCoffeeData = querySnapshot.docs.map((doc) {
         final data = doc.data() as Map<String, dynamic>;
         data['id'] = doc.id;
         return data;
       }).toList();
-    } finally {
-      setState(() {
-        isLoading = false;
-      });
+    } catch (e) {
+      print("Error fetching coffee data: $e");
     }
+
+    setState(() {
+      isLoading = false;
+    });
   }
+
+
 
   Future<void> deleteCoffee(String id) async {
     try {
       await firestore.collection('coffees').doc(id).delete();
-    // ignore: empty_catches
+
+      filteredCoffeeData.removeWhere((coffee) => coffee['id'] == id);
+
+      setState(() {});
+
     } catch (e) {
     }
   }
@@ -193,7 +199,9 @@ class _HomeAdminState extends State<HomeAdmin> {
                               ),
                               ZoomTapAnimation(
                                 onTap: (){
-                                  deleteCoffee(coffee['id']);
+                                  setState(() {
+                                    deleteCoffee(coffee['id']);
+                                  });
                                 },
                                 child: Container(
                                   padding: const EdgeInsets.all(2),

@@ -1,10 +1,13 @@
 import 'dart:io';
 
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:coffee/utils/colors/app_colors.dart';
 import 'package:coffee/widgets/global_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
+
+import '../../../../widgets/dialog.dart';
 
 class CoffeeDetailScreen extends StatelessWidget {
   final String name;
@@ -35,9 +38,15 @@ class CoffeeDetailScreen extends StatelessWidget {
                 child: Image.file(
                   File(imageUrl),
                   fit: BoxFit.fill,
-                  errorBuilder: (context, error, stackTrace) =>
-                      const Icon(CupertinoIcons.exclamationmark),
-                )
+                  errorBuilder: (context, error, stackTrace) {
+                    return ClipRRect(
+                      borderRadius: BorderRadius.circular(20.0),
+                      child: Image.network(
+                        fit: BoxFit.fill,
+                          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3r1s8qt1jMFd_y-bzV8skZdYb6PYQgUKIAq7BXzuv6peeWIHsjPzK7seb7mrXgePv0a4&usqp=CAU'),
+                    );
+                  },
+                ),
             ),
           ),
           const SizedBox(height: 16.0),
@@ -104,7 +113,13 @@ class CoffeeDetailScreen extends StatelessWidget {
                     child: GlobalButton(
                         buttonText: 'Book now',
                         iconData: Icons.coffee_rounded,
-                        onPressed: () {},
+                        onPressed: () {
+                          CustomDialog.showCustomDialog(
+                              context,
+                              name,
+                              'Buyutma qabul qilindi',
+                          );
+                        },
                         buttonColor: AppColors.c_EFE3,
                         textColor: AppColors.black))
               ],
